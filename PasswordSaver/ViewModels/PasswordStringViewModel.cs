@@ -6,11 +6,6 @@ namespace PasswordSaver.ViewModels
     {
         private PasswordStringModel model;
 
-        public PasswordStringViewModel()
-        {
-            model = new PasswordStringModel();
-        }
-
         public string Name
         {
             get => model.Name;
@@ -28,5 +23,17 @@ namespace PasswordSaver.ViewModels
                 model.PasswordValue = value;
             }
         }
+
+        public PasswordStringViewModel()
+        {
+            model = new PasswordStringModel();
+        }
+
+        public PasswordStringViewModel(PasswordStringModel model)
+        {
+            this.model = model;
+        }
+
+        public PasswordStringModel Model { get => model; }
     }
 }
