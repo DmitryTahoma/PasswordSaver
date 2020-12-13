@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:PasswordSaver.Views"
+             x:Class="PasswordSaver.MainPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        
+        <Label Text="Name"
+               HorizontalTextAlignment="Center"
+               FontSize="Large"/>
+        <Label Grid.Column="1"
+               Text="Password"
+               HorizontalTextAlignment="Center"
+               FontSize="Large"/>
+        <CheckBox Grid.Column="2"
+                  IsEnabled="False"/>
+
+        <ScrollView Grid.Row="1"
+                    Grid.ColumnSpan="3">
+            <StackLayout x:Name="PasswordStack"
+                         VerticalOptions="Start"/>
+        </ScrollView>
+
+        <Button Grid.Row="3"
+                Grid.ColumnSpan="3"
+                Text="ADD PASSWORD"
+                FontSize="Large"
+                Clicked="AddPasswordString"/>
+    </Grid>
+
+</ContentPage>
