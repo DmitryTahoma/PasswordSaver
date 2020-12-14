@@ -26,31 +26,19 @@ namespace PasswordSaver
 
                 foreach (PasswordStringModel password in passwords)
                 {
-                    PasswordString ps = new PasswordString();
-                    PasswordStringViewModel psContext = new PasswordStringViewModel(password);
-                    psContext.OnDeletePressed += RemovePasswordString;
-                    ps.BindingContext = psContext;
-
-                    PasswordStringVMs.Add(psContext);
-                    PasswordStack.Children.Add(ps);
+                    AddPasswordString(password);
                 }
             }
         }
 
-        private void AddPasswordString(object sender, EventArgs e)
+        private void AddPasswordStringClick(object sender, EventArgs e)
         {
-            PasswordString ps = new PasswordString();
-            PasswordStringViewModel psContext = new PasswordStringViewModel();
-            psContext.OnDeletePressed += RemovePasswordString;
-            ps.BindingContext = psContext;
+            PasswordStringModel model = AddPasswordString(new PasswordStringModel());
 
             using (SQLiteConnection connection = DBContext.GetConnection())
             {
-                connection.Insert(psContext.Model);
+                connection.Insert(model);
             }
-
-            PasswordStringVMs.Add(psContext);
-            PasswordStack.Children.Add(ps);
         }
 
         private void RemovePasswordString(PasswordStringModel model)
@@ -74,6 +62,26 @@ namespace PasswordSaver
             {
                 connection.Delete<PasswordStringModel>(model.Id);
             }
+        }
+
+        private PasswordStringModel AddPasswordString(PasswordStringModel model)
+        {
+            PasswordString ps = new PasswordString();
+            PasswordStringViewModel psContext = new PasswordStringViewModel(model);
+            model.FieldChanged += (s) => 
+            {
+                using(SQLiteConnection connection = DBContext.GetConnection())
+                {
+                    connection.InsertOrReplace(s);
+                }
+            };
+            psContext.OnDeletePressed += RemovePasswordString;
+            ps.BindingContext = psContext;
+
+            PasswordStringVMs.Add(psContext);
+            PasswordStack.Children.Add(ps);
+
+            return model;
         }
     }
 }

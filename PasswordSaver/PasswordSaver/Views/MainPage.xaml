@@ -44,7 +44,7 @@
                 Grid.ColumnSpan="4"
                 Text="ADD PASSWORD"
                 FontSize="Large"
-                Clicked="AddPasswordString"/>
+                Clicked="AddPasswordStringClick"/>
     </Grid>
 
 </ContentPage>
